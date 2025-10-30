@@ -543,12 +543,25 @@ TIMEZONE is the timezone string (IANA or POSIX format)."
          (dst-flag (nth 7 decoded)))
     (eq dst-flag t)))
 
-(defun time-zones--format-city (city local-time max-location-width max-date-width max-offset-width)
+(defun time-zones--format-tz-abbreviation (time timezone)
+  "Format timezone abbreviation for TIMEZONE at TIME.
+Returns the timezone abbreviation (e.g., MDT, CET, IST, AEST).
+Returns nil for numeric abbreviations (e.g., +04, -03).
+TIME is the time to check (handles DST correctly).
+TIMEZONE is the timezone string (IANA or POSIX format)."
+  (let ((abbrev (format-time-string "%Z" time timezone)))
+    (if (string-match-p "^[+-][0-9]+$" abbrev)
+        nil
+      abbrev)))
+
+(defun time-zones--format-city (city local-time max-location-width max-date-width max-abbreviation-width max-offset-width)
   "Format CITY for display.
 
-Consider LOCAL-TIME, MAX-LOCATION-WIDTH, MAX-DATE-WIDTH, and MAX-OFFSET-WIDTH."
+Consider LOCAL-TIME, MAX-LOCATION-WIDTH, MAX-DATE-WIDTH, MAX-ABBREVIATION-WIDTH,
+and MAX-OFFSET-WIDTH."
   (propertize
-   (format (format "  %%s %%s %%s  %%s  %%-%ds  %%-%ds  %%-%ds %%s\n" max-location-width max-date-width max-offset-width)
+   (format (format "  %%s %%s %%s  %%s  %%-%ds  %%-%ds  %%-%ds  %%-%ds %%s\n"
+                   max-location-width max-date-width max-abbreviation-width max-offset-width)
            (if (equal city time-zones--home-city) "⌂" " ")
            (if (or (< (string-to-number (format-time-string "%H" local-time (map-elt city 'timezone)))
                       (car time-zones-waking-hours))
@@ -564,6 +577,11 @@ Consider LOCAL-TIME, MAX-LOCATION-WIDTH, MAX-DATE-WIDTH, and MAX-OFFSET-WIDTH."
                            (map-elt city 'timezone))
                        'face 'font-lock-builtin-face)
            (format-time-string "%A %d %B" local-time (map-elt city 'timezone))
+           (if time-zones-show-details
+               (propertize (or (time-zones--format-tz-abbreviation local-time (map-elt city 'timezone))
+                               "")
+                           'face 'font-lock-comment-face)
+             "")
            (if time-zones-show-details
                (propertize (time-zones--format-utc-or-home-offset local-time (map-elt city 'timezone))
                            'face 'shadow)
@@ -623,6 +641,11 @@ Consider LOCAL-TIME, MAX-LOCATION-WIDTH, MAX-DATE-WIDTH, and MAX-OFFSET-WIDTH."
                      (mapcar (lambda (city)
                                (length (format-time-string "%A %d %B" local-time (map-elt city 'timezone))))
                              sorted-cities)))
+             (max-abbreviation-width
+              (apply #'max
+                     (mapcar (lambda (city)
+                               (length (time-zones--format-tz-abbreviation local-time (map-elt city 'timezone))))
+                             sorted-cities)))
              (max-offset-width
               (if time-zones-show-details
                   (apply #'max
@@ -631,7 +654,8 @@ Consider LOCAL-TIME, MAX-LOCATION-WIDTH, MAX-DATE-WIDTH, and MAX-OFFSET-WIDTH."
                                  sorted-cities))
                 0)))
         (dolist (city sorted-cities)
-          (insert (time-zones--format-city city local-time max-location-width max-date-width max-offset-width)))))
+          (insert (time-zones--format-city city local-time max-location-width
+                                           max-date-width max-abbreviation-width max-offset-width)))))
     (unless (seq-empty-p time-zones--city-list)
       (insert "\n"))
     (if time-zones-show-help

